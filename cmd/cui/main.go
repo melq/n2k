@@ -2,19 +2,23 @@ package main
 
 import (
 	"fmt"
-	"n2k"
+	"github.com/jessevdk/go-flags"
+	"os"
 )
 
+type Option struct {
+	Object    string `short:"s" long:"string" description:"変換する文字列を入力します"`
+	Num2Kanji bool   `short:"k" long:"n2k" description:"数字を漢数字に変換します"`
+	Kanji2Num bool   `short:"n" long:"k2n" description:"漢数字を数字に変換します"`
+}
+
+var opts Option
+
 func main() {
-	numStr := "123"
-	kanji, err := n2k.Number2kanji(numStr)
+	_, err := flags.Parse(&opts)
 	if err != nil {
-		return
+		fmt.Println(err)
+		os.Exit(1)
 	}
 
-	number, err := n2k.Kanji2number(kanji)
-	if err != nil {
-		return
-	}
-	fmt.Println(kanji, number)
 }
