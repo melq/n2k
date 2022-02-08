@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/jessevdk/go-flags"
+	"n2k"
 	"os"
 )
 
@@ -21,4 +22,17 @@ func main() {
 		os.Exit(1)
 	}
 
+	var res string
+	if opts.Num2Kanji {
+		res, err = n2k.Number2kanji(opts.Object)
+		if err != nil {
+			return
+		}
+	} else if opts.Kanji2Num {
+		res, err = n2k.Kanji2number(opts.Object)
+		if err != nil {
+			return
+		}
+	}
+	fmt.Println(res)
 }
